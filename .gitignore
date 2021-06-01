@@ -1,0 +1,4 @@
+CNNs/lenet/__pycache__/lenet.cpython-38.pyc
+CNNs/lenet/weights/*.npy
+CNNs/lenet/weights/lenet.pth
+CNNs/lenet/data/
