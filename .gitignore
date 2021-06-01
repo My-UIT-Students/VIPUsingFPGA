@@ -1,4 +1,5 @@
-CNNs/lenet/__pycache__/lenet.cpython-38.pyc
-CNNs/lenet/weights/*.npy
-CNNs/lenet/weights/lenet.pth
+*.pyc
 CNNs/lenet/data/
+OpenIP/vip_core/modelsim/*
+*.v.bak
+CNNs/lenet/checkpoint/ckpt.pth
