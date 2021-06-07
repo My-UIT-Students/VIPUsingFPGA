@@ -4,6 +4,6 @@ OpenIP/vip_core/modelsim/*
 *.v.bak
 CNNs/lenet/checkpoint/ckpt.pth
 OpenIP/scripts/work/
-OpenIP/scripts/results/
 
-OpenIP/data/
+
+OpenIP/data/tb_results/output.txt

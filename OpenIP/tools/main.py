@@ -7,7 +7,7 @@ if __name__ == "__main__":
     parser.add_argument('--source', type=str, default='../data/datasets/', help='source path')
     parser.add_argument('--results', type=str, default='../data/results/', help='result paht')
     opt = parser.parse_args()
-    print(opt)
+    # print(opt)
     # video to text file
     dataset = LoadImages(opt.source, (100,100))
     dataset.to_text(opt.source)

@@ -33,7 +33,7 @@ wire data_empty;
 
 // DATA GENERATOR / READ AND TEXT IMAGE FILE
 ImageGenerator #(
-    .input_file("/home/ryan/Documents/ce234/VIPUsingFPGA/OpenIP/tools/data/images/r1.mp4.txt")
+    .input_file("/home/ryan/Documents/ce234/VIPUsingFPGA/OpenIP/data/datasets/text/file_example_MP4_480_1_5MG.mp4.txt")
     )
      image_read_inst (
     .clock(clock),
@@ -66,7 +66,7 @@ vip_top vip_ins(
 // ImageGenerator image_read_inst
 ImageWriter #(
     .DWIDTH(DWIDTH),
-    .output_file("/home/ryan/Documents/ce234/VIPUsingFPGA/OpenIP/tools/data/results/output.txt")
+    .output_file("/home/ryan/Documents/ce234/VIPUsingFPGA/OpenIP/data/tb_results/output.txt")
 
 ) ImageWriter_inst  (
     .clock(clock),
