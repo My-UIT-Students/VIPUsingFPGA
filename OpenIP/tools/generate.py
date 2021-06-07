@@ -27,10 +27,10 @@ def build_report():
     # 
     w0 = "8'hbd3e76c9"
     bias = "8'h3ddb8bac"
-    verilog_template = get_template_sample("./featuremap_template.v")
+    verilog_template = get_template_sample("template/featuremap_template.v")
     jinja2_template = Template(verilog_template)
     contents = jinja2_template.render(w0=w0, bias=bias)
-    save_report(contents,"fm0.v")
+    save_report(contents, "template/fm0.v")
     print("create  success!")
 
 

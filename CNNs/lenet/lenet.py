@@ -7,21 +7,16 @@ import torch.nn.functional as F
 class LeNet(nn.Module):
     def __init__(self, weight_path):
         super(LeNet, self).__init__()
-        self.conv1 = nn.Conv2d(3, 6, 5)
+
+        self.conv1 = nn.Conv2d(3, 6, 5) # 3 channels/6 filters/5x5
         self.conv2 = nn.Conv2d(6, 16, 5)
+
         self.fc1   = nn.Linear(16*5*5, 120)
         self.fc2   = nn.Linear(120, 84)
         self.fc3   = nn.Linear(84, 10)
-        self.weight_path = weight_path
-        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-    # def init_weights(self):
-    #     self.to(self.device)
-    #     if self.device == 'cuda':
-    #         self = torch.nn.DataParallel(self)
-    #         cudnn.benchmark = True
-    #     # checkpoint = torch.load(self.weight_path + 'lenet.pth')
-    #     # self.load_state_dict(checkpoint['net'])
+        self.weight_path = weight_path
+        # self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     def forward(self, x):
         out = F.relu(self.conv1(x))

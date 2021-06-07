@@ -3,3 +3,5 @@ CNNs/lenet/data/
 OpenIP/vip_core/modelsim/*
 *.v.bak
 CNNs/lenet/checkpoint/ckpt.pth
+/OpenIP/scripts/work/
+/OpenIP/scripts/results/

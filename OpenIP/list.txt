@@ -1,0 +1,7 @@
+total 28
+drwxrwxr-x 2 ryan ryan 4096 Thg 5  28 23:56 ./
+drwxrwxr-x 3 ryan ryan 4096 Thg 6   1 12:09 ../
+-rw-rw-r-- 1 ryan ryan 1465 Thg 5  29 01:22 core.v
+-rw-rw-r-- 1 ryan ryan 6611 Thg 5  29 00:51 fifo_24b.v
+-rw-rw-r-- 1 ryan ryan 1421 Thg 6   1 15:05 vip_top.v
+-rw-rw-r-- 1 ryan ryan  901 Thg 5  28 21:59 vip_top.v.bak

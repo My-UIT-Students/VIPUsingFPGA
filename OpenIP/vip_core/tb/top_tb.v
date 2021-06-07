@@ -18,6 +18,10 @@ initial begin
 end
 //
 
+wire [10:0] width;
+wire [10:0] height;
+wire [10:0] num_frame;
+
 wire [DWIDTH-1:0] data_in;
 wire data_wrreq;
 wire data_full;
@@ -30,6 +34,10 @@ wire data_empty;
 ImageGenerator image_read_inst (
     .clock(clock),
     .reset(reset),
+    //
+    .width(width),
+    .height(height),
+    .num_frame(num_frame),
     // fifo write bu(te bu)s
     .fifo_full(data_full),
     .fifo_data(data_in),
@@ -54,6 +62,9 @@ vip_top vip_ins(
 ImageWriter #(.DWIDTH(DWIDTH)) ImageWriter_inst  (
     .clock(clock),
     .reset(reset),    
+    .width(width),
+    .height(height),
+    .num_frame(num_frame),
     .fifo_rdreq(data_rdreq),
     .fifo_data(data_out),
     .fifo_empty(data_empty)
