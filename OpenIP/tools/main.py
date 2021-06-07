@@ -7,4 +7,4 @@ if __name__ == "__main__":
     # media_to_text("./data/images","./data/images",(100,100),2)
     # dataset = LoadImages("./data/images", (100,100))
     # dataset.to_text("./data/images/")
-    text_to_media("./data/images/","./data/results/")
+    text_to_media("./data/results/","./data/results/")

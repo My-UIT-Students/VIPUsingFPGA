@@ -21,6 +21,7 @@ end
 wire [10:0] width;
 wire [10:0] height;
 wire [10:0] num_frame;
+wire media_type;
 
 wire [DWIDTH-1:0] data_in;
 wire data_wrreq;
@@ -38,6 +39,7 @@ ImageGenerator image_read_inst (
     .width(width),
     .height(height),
     .num_frame(num_frame),
+    .media_type(media_type),
     // fifo write bu(te bu)s
     .fifo_full(data_full),
     .fifo_data(data_in),
@@ -65,6 +67,7 @@ ImageWriter #(.DWIDTH(DWIDTH)) ImageWriter_inst  (
     .width(width),
     .height(height),
     .num_frame(num_frame),
+    .media_type(media_type),
     .fifo_rdreq(data_rdreq),
     .fifo_data(data_out),
     .fifo_empty(data_empty)

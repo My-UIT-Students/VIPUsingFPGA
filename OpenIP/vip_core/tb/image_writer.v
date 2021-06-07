@@ -5,18 +5,21 @@ module ImageWriter (
     fifo_rdreq,
     fifo_data,
     fifo_empty,
+
     width,
     height,
-    num_frame
-
+    num_frame,
+    media_type
 );
 parameter DWIDTH = 8;
 parameter output_file = "/home/ryan/Documents/ce234/VIPUsingFPGA/OpenIP/tools/data/results/output.txt";
 input    clock;
 input    reset;
+
 input [10:0] width;
 input [10:0] height;
 input [10:0] num_frame;
+input media_type;
 
 output  reg  fifo_rdreq;
 input [DWIDTH-1:0]    fifo_data;
@@ -59,6 +62,14 @@ always @(posedge clock or posedge reset) begin
             // for write data to text
             
             pixel_cnt <= pixel_cnt + 1;
+            // 
+            if (pixel_cnt == 1 && frame_cnt == 0) begin
+                // add header file
+                $fwrite(file_output,"%d\n",media_type) ; // type
+                $fwrite(file_output,"%d\n",width) ; // width
+                $fwrite(file_output,"%d\n",height) ; // height
+                $fwrite(file_output,"%d\n",num_frame) ; // numframe
+            end
 
             // data <= fifo_data;        
             if (pixel_cnt == 100*100) begin

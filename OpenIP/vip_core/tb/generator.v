@@ -5,6 +5,7 @@ module ImageGenerator (
     width,
     height,
     num_frame,
+    media_type,
     // fifo write bus
     fifo_full,
     fifo_data,
@@ -23,6 +24,7 @@ input fifo_full;
 output [DWIDTH-1:0] fifo_data;
 output reg fifo_wrreq;
 output reg [10:0] width, height,num_frame;
+output reg media_type;
 
 integer file_in;
 
@@ -31,9 +33,7 @@ parameter WR_DATA_STATE = 1;
 //
 reg [15:0] pixel_cnt, frame_counter;
 
-
 reg [DWIDTH-1:0] data_read;
-reg media_type;
 reg [1:0] state;
 
 //
