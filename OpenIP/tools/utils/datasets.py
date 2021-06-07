@@ -34,6 +34,7 @@ def text_to_media(src_path, dest_path):
     for file in files:
         try:
             with open(file, "r") as f:
+                logger.info("#file:{}".format(file))
                 type = int(f.readline().strip())
                 width = int(f.readline().strip())
                 height = int(f.readline().strip())
@@ -41,10 +42,9 @@ def text_to_media(src_path, dest_path):
                 if type == 0:
                     # video
                     file_name = dest_path + file.split("/")[-1] + ".avi"
-                    fourcc = cv2.VideoWriter_fourcc(*'XVID')
-                    out =  cv2.VideoWriter('output.avi', fourcc, 20.0, (width,height))
+                    out = cv2.VideoWriter(file_name,cv2.VideoWriter_fourcc('M','J','P','G'), 10, (100,100))
+                    frame = np.zeros([width, height, 3], dtype=np.uint8)
                     for i in range (0,numframe):
-                        frame = np.zeros([width, height, 3])
                         for y in range(0, height):
                             for x in range(0, width):
                                 frame[x, y, 0] = int(f.readline().strip())
@@ -71,7 +71,7 @@ def text_to_media(src_path, dest_path):
 
 
 class LoadImages:  # for inference
-    def __init__(self, path, img_size=(640, 640), video_frame_step=5):
+    def __init__(self, path, img_size=(640, 640), video_frame_step=50, max_frames=50):
         p = str(Path(path))  # os-agnostic
         p = os.path.abspath(p)  # absolute path
         if '*' in p:
@@ -92,7 +92,7 @@ class LoadImages:  # for inference
         self.nf = ni + nv  # number of files
         self.video_flag = [False] * ni + [True] * nv
         self.mode = 'image'
-        self.max_frames = 5
+        self.max_frames = max_frames
         if any(videos):
             self.new_video(videos[0])  # new video
         else:
@@ -106,6 +106,7 @@ class LoadImages:  # for inference
 
     def to_text(self, path):
         for file, video_flag in zip(self.files, self.video_flag):
+            logger.info("#open-file:{}".format(file))
             dest_file = path + file.split("/")[-1] + '.txt'
             try:
                 with open(dest_file, "w") as f:
@@ -141,6 +142,7 @@ class LoadImages:  # for inference
                         self.write_pixel(frame, f)
 
                     f.close()
+                    logger.info("File {} is saved".format(dest_file))
             except BaseException as ex:
                 logger.error(ex)
 

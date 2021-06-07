@@ -29,7 +29,7 @@ reg [DWIDTH-1:0] data;
 reg data_valid;
 integer  file_output;
 reg [15:0] pixel_cnt;
-reg frame_cnt;
+reg [15:0] frame_cnt;
 
 initial begin
     file_output = $fopen(output_file,"w");
@@ -75,7 +75,7 @@ always @(posedge clock or posedge reset) begin
             if (pixel_cnt == 100*100) begin
                 frame_cnt <= frame_cnt + 1;
                 pixel_cnt <= 0;
-                $display("frame %d",frame_cnt);
+                $display("frame proceed %d",frame_cnt);
             end
             if (frame_cnt < num_frame) begin               
                 $fwrite(file_output,"%d\n",fifo_data[23:16]) ;
