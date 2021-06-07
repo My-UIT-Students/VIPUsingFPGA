@@ -5,7 +5,5 @@ OpenIP/vip_core/modelsim/*
 CNNs/lenet/checkpoint/ckpt.pth
 OpenIP/scripts/work/
 OpenIP/scripts/results/
-OpenIP/tools/data/results/
 
-OpenIP/tools/data/images/
-OpenIP/tools/data/results/
+OpenIP/data/

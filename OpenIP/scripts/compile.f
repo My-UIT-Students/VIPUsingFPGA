@@ -3,3 +3,4 @@
 
 -f rtl.list
 -f tb.list
+-f altera.list
