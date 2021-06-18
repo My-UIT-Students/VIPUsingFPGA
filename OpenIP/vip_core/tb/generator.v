@@ -27,7 +27,7 @@ output reg [10:0] width, height,num_frame;
 output reg media_type;
 
 integer file_in;
-integer  statusR, statusG,statusB;
+integer  statusR, statusG,statusB, status;
 parameter READ_CFG_STATE = 0;
 parameter WR_DATA_STATE = 1;
 //
@@ -64,10 +64,10 @@ always @(posedge clock or posedge reset) begin
         case (state)
             READ_CFG_STATE:
             begin
-                $fscanf(file_in,"%d",media_type); // 0: video, 1: image
-                $fscanf(file_in,"%d",width);
-                $fscanf(file_in,"%d",height);
-                $fscanf(file_in,"%d",num_frame);
+                status = $fscanf(file_in,"%d",media_type); // 0: video, 1: image
+                status = $fscanf(file_in,"%d",width);
+                status = $fscanf(file_in,"%d",height);
+                status = $fscanf(file_in,"%d",num_frame);
                 $display("width=%d",width);
                 $display("height=%d",height);
                 $display("num_frame=%d",num_frame);
