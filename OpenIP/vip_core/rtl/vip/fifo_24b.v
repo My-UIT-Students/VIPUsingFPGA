@@ -80,9 +80,9 @@ module fifo_24b (
 	defparam
 		scfifo_component.add_ram_output_register = "OFF",
 		scfifo_component.almost_empty_value = 10,
-		scfifo_component.almost_full_value = 1014,
+		scfifo_component.almost_full_value = 90,
 		scfifo_component.intended_device_family = "Cyclone III",
-		scfifo_component.lpm_numwords = 1024,
+		scfifo_component.lpm_numwords = 100,
 		scfifo_component.lpm_showahead = "OFF",
 		scfifo_component.lpm_type = "scfifo",
 		scfifo_component.lpm_width = 24,

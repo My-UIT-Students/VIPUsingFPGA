@@ -13,7 +13,7 @@ module ImageGenerator (
 );
 // paramenters
 parameter DWIDTH = 24;
-parameter input_file = "/home/ryan/Documents/ce234/VIPUsingFPGA/OpenIP/tools/data/images/golang.png.txt";
+parameter input_file = "";
 //
 
 //portmap
@@ -47,11 +47,9 @@ reg [7:0] data_g;
 reg [7:0] data_b;
 // generate random value
 reg[15:0]a;
-reg[15:0]b;
 
 always @(posedge clock) begin
     a <=$urandom%10; 
-    b <=$urandom%20;
     // $display("A %d, B: %d",a,b);
 end
 wire data_valid_in;
@@ -62,7 +60,7 @@ always @(posedge clock or posedge reset) begin
       state <= 0;
   end
   else begin
-      if (data_valid_in) begin
+      if (data_valid_in==1 && fifo_full == 0) begin
         case (state)
             READ_CFG_STATE:
             begin

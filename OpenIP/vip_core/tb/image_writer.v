@@ -32,9 +32,23 @@ reg [15:0] pixel_cnt;
 reg [15:0] frame_cnt;
 wire sof; // start of frame
 assign sof = (pixel_cnt == 1) && (data_valid==1);
+
+// generate ready signal
+reg[15:0]a;
+
+always @(posedge clock) begin
+    a <=$urandom%10; 
+    // $display("A %d, B: %d",a,b);
+end
+// 
+wire ready;
+assign ready = a[4] | a[0];
+
+
 initial begin
     file_output = $fopen(output_file,"w");
 end
+
 always @(posedge clock or posedge reset) begin
     if(reset) begin
         // data_valid <= 1'b0;   
@@ -42,7 +56,7 @@ always @(posedge clock or posedge reset) begin
     end
     else begin
         data_valid <= fifo_rdreq; // delay 1clk after read fifo
-        if (fifo_empty==0) begin
+        if (fifo_empty==0 && ready == 1) begin
             // ly tuong ()
             fifo_rdreq <= 1'b1;
            
