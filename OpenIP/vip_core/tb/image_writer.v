@@ -25,12 +25,13 @@ output  reg  fifo_rdreq;
 input [DWIDTH-1:0]    fifo_data;
 input fifo_empty;
 
-reg [DWIDTH-1:0] data;
+// reg [DWIDTH-1:0] data;
 reg data_valid;
 integer  file_output;
 reg [15:0] pixel_cnt;
 reg [15:0] frame_cnt;
-
+wire sof; // start of frame
+assign sof = (pixel_cnt == 1) && (data_valid==1);
 initial begin
     file_output = $fopen(output_file,"w");
 end
@@ -40,9 +41,12 @@ always @(posedge clock or posedge reset) begin
         fifo_rdreq <= 0;  
     end
     else begin
+        data_valid <= fifo_rdreq; // delay 1clk after read fifo
         if (fifo_empty==0) begin
+            // ly tuong ()
             fifo_rdreq <= 1'b1;
-            data_valid <= fifo_rdreq;
+           
+            //
         end
         else begin
             fifo_rdreq <= 1'b0;
@@ -50,10 +54,12 @@ always @(posedge clock or posedge reset) begin
 
     end
 end
+// delay data valid 1 clk
+
+
 // wire data to text
 always @(posedge clock or posedge reset) begin
     if(reset) begin
-        data <= {DWIDTH{1'b0}};    
         pixel_cnt <= 1;
         frame_cnt <= 0;
     end
@@ -74,7 +80,7 @@ always @(posedge clock or posedge reset) begin
             // data <= fifo_data;        
             if (pixel_cnt == 100*100) begin
                 frame_cnt <= frame_cnt + 1;
-                pixel_cnt <= 0;
+                pixel_cnt <= 1;
                 $display("frame proceed %d",frame_cnt);
             end
             if (frame_cnt < num_frame) begin               
@@ -90,6 +96,19 @@ always @(posedge clock or posedge reset) begin
         end        
     end
 end
-
+//
+// assign sof = (pixel_cnt == 1) && (data_valid==1)
+// always @(posedge clock or posedge reset) begin
+//     if(reset) begin
+//         // data_valid <= 1'b0;   
+//         sof <= 0;  
+//     end
+//     else begin
+//        if (pixel_cnt == 1 && data_valid==1) 
+//         sof <= 1;
+//         else
+//         sof <= 0;
+//     end
+// end
 
 endmodule

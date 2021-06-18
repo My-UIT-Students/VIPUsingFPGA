@@ -71,7 +71,7 @@ def text_to_media(src_path, dest_path):
 
 
 class LoadImages:  # for inference
-    def __init__(self, path, img_size=(640, 640), video_frame_step=50, max_frames=50):
+    def __init__(self, path, img_size=(640, 640), video_frame_step=5, max_frames=5):
         p = str(Path(path))  # os-agnostic
         p = os.path.abspath(p)  # absolute path
         if '*' in p:
