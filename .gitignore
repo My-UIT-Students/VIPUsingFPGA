@@ -7,3 +7,18 @@ OpenIP/scripts/work/
 
 
 OpenIP/data/tb_results/output.txt
+
+OpenIP/scripts/results/log/
+OpenIP/scripts/results/
+OpenIP/data/results/
+
+
+OpenIP/data/datasets/text/
+
+OpenIP/data/datasets/file_example_MP4_480_1_5MG.mp4.txt
+
+OpenIP/data/datasets/logo-uit.png.txt
+
+*.wlf
+
+OpenIP/scripts/transcript

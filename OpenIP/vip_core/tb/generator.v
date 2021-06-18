@@ -27,11 +27,11 @@ output reg [10:0] width, height,num_frame;
 output reg media_type;
 
 integer file_in;
-
+integer  statusR, statusG,statusB;
 parameter READ_CFG_STATE = 0;
 parameter WR_DATA_STATE = 1;
 //
-reg [15:0] pixel_cnt, frame_counter;
+reg [23:0] pixel_cnt, frame_counter;
 
 reg [DWIDTH-1:0] data_read;
 reg [1:0] state;
@@ -45,59 +45,78 @@ end
 reg [7:0] data_r;
 reg [7:0] data_g;
 reg [7:0] data_b;
+// generate random value
+reg[15:0]a;
+reg[15:0]b;
+
+always @(posedge clock) begin
+    a <=$urandom%10; 
+    b <=$urandom%20;
+    // $display("A %d, B: %d",a,b);
+end
+wire data_valid_in;
+assign data_valid_in = a[3] | a[1];
 
 always @(posedge clock or posedge reset) begin
   if (reset) begin
       state <= 0;
   end
   else begin
-      case (state)
-          READ_CFG_STATE:
-          begin
-              $fscanf(file_in,"%d",media_type); // 0: video, 1: image
-              $fscanf(file_in,"%d",width);
-              $fscanf(file_in,"%d",height);
-              $fscanf(file_in,"%d",num_frame);
-              $display("width=%d",width);
-              $display("height=%d",height);
-              $display("num_frame=%d",num_frame);
-              $display("Read cfg done");
-              pixel_cnt <= 0;
-              frame_counter <= 0;
-              state <= WR_DATA_STATE;
-              pixel_cnt <= 1;
-              fifo_wrreq <= 0;
-              data_read <= 0;
-          end
-          WR_DATA_STATE:
-          begin
-                pixel_cnt <= pixel_cnt + 1;
-
-                // data_read <= pixel_cnt; 
-                $fscanf(file_in,"%d",data_r);
-                $fscanf(file_in,"%d",data_g);
-                $fscanf(file_in,"%d",data_b);
-                data_read <= {data_r,data_g,data_b};
-
-                // $display("pixel_cnt=%d",pixel_cnt);
-                fifo_wrreq <= 1;
-                if (pixel_cnt == width * height) begin
-                    frame_counter <=  frame_counter +1;
-                    pixel_cnt <= 0;
-                    $display("start frame=%d",frame_counter);
-                    if (frame_counter == num_frame) begin
-                        $display("end frame");
-                        // $finish;
+      if (data_valid_in) begin
+        case (state)
+            READ_CFG_STATE:
+            begin
+                $fscanf(file_in,"%d",media_type); // 0: video, 1: image
+                $fscanf(file_in,"%d",width);
+                $fscanf(file_in,"%d",height);
+                $fscanf(file_in,"%d",num_frame);
+                $display("width=%d",width);
+                $display("height=%d",height);
+                $display("num_frame=%d",num_frame);
+                $display("Read cfg done");
+                pixel_cnt <= 0;
+                frame_counter <= 0;
+                state <= WR_DATA_STATE;
+                pixel_cnt <= 1;
+                fifo_wrreq <= 0;
+                data_read <= 0;
+            end
+            WR_DATA_STATE:
+            begin
+                    pixel_cnt <= pixel_cnt + 1;
+                    // data_read <= pixel_cnt; 
+                    statusR = $fscanf(file_in,"%d",data_r);
+                    statusG = $fscanf(file_in,"%d",data_g);
+                    statusB =$fscanf(file_in,"%d",data_b);
+                    if (statusR==1 && statusG==1 && statusB==1) begin
+                        // data_read <= pixel_cnt;
+                        data_read <= {data_r,data_g,data_b};
+                        // $display("pixel_cnt=%d",pixel_cnt);
+                        fifo_wrreq <= 1;
+                        if (pixel_cnt == width * height) begin
+                            frame_counter <=  frame_counter +1;
+                            pixel_cnt <= 0;
+                            $display("start frame=%d",frame_counter);
+                            if (frame_counter == num_frame) begin
+                                $display("end frame");
+                                // $finish;
+                            end
+                        end                
                     end
-                end                
-                // $display("Read data");
-          end
-          default:
-          begin
-              $display("finishd");
-          end 
-      endcase
-
+                    else begin
+                        fifo_wrreq <= 0;
+                    end
+                    // $display("Read data");
+            end
+            default:
+            begin
+                $display("finishd");
+            end 
+        endcase
+      end 
+      else begin
+          fifo_wrreq <= 0;
+      end
   end
 end
 

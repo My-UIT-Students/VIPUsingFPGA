@@ -36,10 +36,10 @@ fifo_24b fifo_in_inst(
 	.clock(clock),
 	.data(fifo_in_data),
 	.wrreq(fifo_in_wrreq),
-	.full(fifo_in_full),	
+	.almost_full(fifo_in_full),	
 
 	.rdreq(data_rdreq),
-	.empty(data_in_empty),
+	.almost_empty(data_in_empty),
 	.q(data_din)
 
 	);
@@ -62,10 +62,10 @@ fifo_24b fifo_out_inst(
 	
 	.data(data_out),
 	.wrreq(data_out_wrreq),
-	.full(data_out_full),
+	.almost_full(data_out_full),
 
 	.rdreq(fifo_out_rdreq),	
-	.empty(fifo_out_empty),
+	.almost_empty(fifo_out_empty),
 	.q(fifo_out_data)
 	);
 endmodule

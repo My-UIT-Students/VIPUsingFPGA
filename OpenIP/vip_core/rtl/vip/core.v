@@ -67,7 +67,7 @@ always @(posedge clock or posedge reset) begin
         data_valid_out <= 1'b0;     
     end
     else begin
-        if(start && data_valid_in) begin
+        if(data_valid_in) begin
             data_out <= ff_rdata;
             data_valid_out <= 1'b1;
         end
