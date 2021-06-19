@@ -107,7 +107,7 @@ class LoadImages:  # for inference
     def to_text(self, path):
         for file, video_flag in zip(self.files, self.video_flag):
             logger.info("#open-file:{}".format(file))
-            dest_file = path + file.split("/")[-1] + '.txt'
+            dest_file = path +  'text/' + file.split("/")[-1] + '.txt'
             try:
                 with open(dest_file, "w") as f:
                     logger.debug("open {}".format(dest_file))
@@ -116,7 +116,8 @@ class LoadImages:  # for inference
                     width = self.img_size[0]
                     height = self.img_size[0]
                     if video_flag:
-                        f.writelines(["0\n{}\n{}\n{}\n".format(width, height, self.max_frames)])
+                        # write header
+                        f.writelines(["0\n{}\n{}\n{}\n".format(width, height, self.max_frames-1)])
                         # read frame
                         frame_cnt = 0;
                         frame_write = 0;
